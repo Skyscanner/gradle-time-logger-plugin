@@ -56,12 +56,16 @@ The Mixpanel reporter tracks the following properties:
 
 ### Build 
 
+Event generated once per build.
+
 | Property     | Type    | Example                                     |
 |--------------|---------|---------------------------------------------|
 | buildFailed  | Boolean | true                                        |
 | buildFailure | String  | Execution failed for task ':compileKotlin'. |
 
 ### BuildTask 
+
+Event generated once per task in the build graph.
 
 | Property    | Type    | Example        |
 |-------------|---------|----------------|
