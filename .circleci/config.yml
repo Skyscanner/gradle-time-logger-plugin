@@ -1,0 +1,56 @@
+version: 2
+
+defaults: &defaults
+  working_directory: ~/repo
+  docker:
+    - image: circleci/openjdk:8-jdk
+  environment:
+    JVM_OPTS: -Xmx3200m
+    GRADLE_OPTS: '-Dorg.gradle.daemon=false'
+    _JAVA_OPTIONS: "-Xms256m -Xmx1280m -XX:MaxPermSize=350m"
+
+jobs:
+  build:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - dependencies-{{ checksum "build.gradle.kts" }}
+            - dependencies
+      - run: ./gradlew dependencies
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: dependencies-{{ checksum "build.gradle.kts" }}
+      - run: ls -la
+      - run:
+          name: Build project
+          command: ./gradlew :jar --stacktrace
+      - store_artifacts:
+          path: build/libs
+
+  build-example:
+    <<: *defaults
+    steps:
+      - checkout
+      - run: cd example/
+      - restore_cache:
+          keys:
+            - dependencies-{{ checksum "build.gradle.kts" }}
+            - dependencies
+      - run: ./gradlew dependencies
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: dependencies-{{ checksum "build.gradle.kts" }}
+      - run:
+          name: Build example project
+          command: ./gradlew :assemble --stacktrace
+
+workflows:
+  version: 2
+  pr-checks:
+    jobs:
+      - build
+      - build-example
