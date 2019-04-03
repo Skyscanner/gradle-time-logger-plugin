@@ -1,5 +1,7 @@
 # Gradle build time logger
 
+[![CircleCI](https://circleci.com/gh/Skyscanner/gradle-time-logger-plugin.svg?style=shield)](https://circleci.com/gh/Skyscanner/gradle-time-logger-plugin)
+
 Do you want to know how much time it takes for you and your team to build? Now you can.
 
 ## Usage
