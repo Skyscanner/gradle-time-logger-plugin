@@ -44,7 +44,7 @@ val mixpanelReporterFactory: ReporterFactory = { logger: Logger, extension: Buil
                 .forEach { delivery.addMessage(it) }
             mixpanelAPI.deliver(delivery)
             logger.lifecycle("\uD83D\uDCE1 Build stats sent to Mixpanel \uD83D\uDCE1")
-        } catch (e: RuntimeException) {
+        } catch (e: Exception) {
             logger.warn("Mixpanel logging failed: $e")
         }
     }
