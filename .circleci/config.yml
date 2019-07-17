@@ -23,7 +23,6 @@ jobs:
           paths:
             - ~/.gradle
           key: dependencies-{{ checksum "build.gradle.kts" }}
-      - run: ls -la
       - run:
           name: Build project
           command: ./gradlew :jar --stacktrace
@@ -48,9 +47,36 @@ jobs:
           name: Build example project
           command: ./gradlew :assemble --stacktrace
 
+  release:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - dependencies-{{ checksum "build.gradle.kts" }}
+            - dependencies
+      - run: ./gradlew dependencies
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: dependencies-{{ checksum "build.gradle.kts" }}
+      - run:
+          name: Release project
+          command: ./gradlew publishPlugins --stacktrace -Dgradle.publish.key=$GRADLE_PUBLISH_KEY -Dgradle.publish.secret=$GRADLE_PUBLISH_SECRET
+      - store_artifacts:
+          path: build/libs
+
 workflows:
   version: 2
   pr-checks:
     jobs:
       - build
       - build-example
+      - release:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
+            tags:
+              only: /^v.*/
