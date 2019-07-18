@@ -72,9 +72,9 @@ workflows:
     jobs:
       - build
       - build-example
+  cut-release:
+    jobs:
       - release:
-          requires:
-            - build
           filters:
             branches:
               only: master
