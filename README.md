@@ -79,3 +79,7 @@ Event generated once per task in the build graph.
 | skipMessage | String  |                |
 | upToDate    | Boolean | false          |
 | noSource    | Boolean | false          |
+
+## Releasing a new version
+
+Please look at [RELEASING.md](RELEASING.md)
