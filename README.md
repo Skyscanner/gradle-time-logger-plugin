@@ -1,3 +1,9 @@
+# Warning: this project is deprecated
+
+Skyscanner has stopped maintaining this project and will not be doing further releases under the skyscanner namespace.
+
+Feel free to Fork the project and update or fork it as you see fit and we can link to the new version.
+
 # Gradle build time logger
 
 [![CircleCI](https://circleci.com/gh/Skyscanner/gradle-time-logger-plugin.svg?style=shield)](https://circleci.com/gh/Skyscanner/gradle-time-logger-plugin)
